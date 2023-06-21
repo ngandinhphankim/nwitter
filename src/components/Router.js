@@ -1,15 +1,26 @@
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 import Auth from '../routes/Auth'
 import Home from '../routes/Home'
+import Profile from '../routes/Profile'
+import Navigation from './Navigation'
 
 function AppRouter({ isLoggedIn }) {
+    console.log(isLoggedIn);
 
     return (
         <Router>
-            <Switch>
-                {isLoggedIn ? <><Route path="/"><Home /></Route></> : <Route path="/"><Auth /></Route>}
-            </Switch>
+            {isLoggedIn ? <Navigation /> : <></>}
+            <Routes>
+                {
+                    isLoggedIn ?
+                        <>
+                            <Route exact path="/" element={<Home />} />
+                            <Route exact path="/profile" element={<Profile />} />
+                        </>
+                        : <Route exact path="/" element={<Auth />} ></Route>
+                }
+            </Routes>
         </Router>
     )
 }
